@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1708963665376,
+      "tag": "0000_thin_absorbing_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1708977334746,
+      "tag": "0001_hesitant_stark_industries",
+      "breakpoints": true
+    }
+  ]
+}
