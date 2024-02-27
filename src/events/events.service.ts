@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DB_CLIENT } from '../database/database.constant';
-import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { events, NewEvent } from 'src/database/schema';
 import { eq } from 'drizzle-orm';
+import { DatabaseClient } from '../database/database-connection.service';
 
 @Injectable()
 export class EventsService {
-  constructor(@Inject(DB_CLIENT) private db: NodePgDatabase) {}
+  constructor(@Inject(DB_CLIENT) private db: DatabaseClient) {}
 
   async create(newEvent: NewEvent) {
     return this.db.insert(events).values(newEvent).returning();

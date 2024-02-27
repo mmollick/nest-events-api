@@ -1,14 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { NodePgDatabase } from 'drizzle-orm/node-postgres';
-import { DB_CLIENT, DB_CONNECTION } from '../database/database.constant';
+import { DB_CLIENT } from '../database/database.constant';
 import { projects } from '../database/schema';
 import { eq } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateProjectDto } from './dto/create-project.dto';
+import { DatabaseClient } from '../database/database-connection.service';
 
 @Injectable()
 export class ProjectService {
-  constructor(@Inject(DB_CLIENT) private db: NodePgDatabase) {}
+  constructor(@Inject(DB_CLIENT) private db: DatabaseClient) {}
 
   async create(createProjectDto: CreateProjectDto) {
     return this.db

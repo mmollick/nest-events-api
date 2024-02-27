@@ -6,16 +6,18 @@ import {
 } from '@nestjs/common';
 import { Pool } from 'pg';
 import { ConfigService } from '@nestjs/config';
-import { NodePgClient } from 'drizzle-orm/node-postgres';
+import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import { drizzle } from 'drizzle-orm/node-postgres';
+
+export type DatabaseClient = NodePgDatabase;
 
 @Injectable()
 export class DatabaseConnection implements OnModuleDestroy, OnModuleInit {
   private logger = new Logger('DatabaseConnection');
 
   public readonly pool: Pool;
-  public readonly client: NodePgClient;
+  public readonly client: DatabaseClient;
 
   /**
    * Inits a new database using the configuration options
