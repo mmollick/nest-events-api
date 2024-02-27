@@ -15,6 +15,20 @@
       "when": 1708977334746,
       "tag": "0001_hesitant_stark_industries",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1708980062022,
+      "tag": "0002_common_squadron_supreme",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1708982741718,
+      "tag": "0003_happy_silver_fox",
+      "breakpoints": true
     }
   ]
 }

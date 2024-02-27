@@ -13,6 +13,9 @@ class EnvironmentVariables {
   PORT: number;
 
   @IsString()
+  ADMIN_KEY: string;
+
+  @IsString()
   DB_URI: string;
 
   @IsOptional()
