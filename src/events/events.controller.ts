@@ -20,7 +20,6 @@ export class EventsController {
 
   @Get()
   async findAll(@Param('projectId') projectId: string) {
-    console.log(projectId);
     return this.eventsService.findByProject(projectId);
   }
 }
