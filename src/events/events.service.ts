@@ -3,6 +3,7 @@ import { DB_CLIENT } from '../database/database.constant';
 import { events, NewEvent } from 'src/database/schema';
 import { eq } from 'drizzle-orm';
 import { DatabaseClient } from '../database/database-connection.service';
+import { HttpParamsDto } from '../libs/http-params.dto';
 
 @Injectable()
 export class EventsService {
@@ -12,7 +13,11 @@ export class EventsService {
     return this.db.insert(events).values(newEvent).returning();
   }
 
-  async findByProject(id: string) {
-    return this.db.select().from(events).where(eq(events.projectId, id));
+  async findByProjectPaginated(id: string, filter: HttpParamsDto) {
+    return this.db.query.events.findMany({
+      where: eq(events.projectId, id),
+      limit: filter.limit,
+      offset: Math.max(filter.page - 1, 0),
+    });
   }
 }

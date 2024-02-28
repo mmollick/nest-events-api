@@ -1,8 +1,17 @@
-import { Controller, Get, Post, Body, UseGuards, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UseGuards,
+  Param,
+  Query,
+} from '@nestjs/common';
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { PublicProjectGuard } from '../guards/public-project.guard';
 import { SkipAuth } from '../decorators/skip-auth';
+import { HttpParamsDto } from '../libs/http-params.dto';
 
 @Controller('events/:projectId')
 @UseGuards(PublicProjectGuard)
@@ -19,7 +28,10 @@ export class EventsController {
   }
 
   @Get()
-  async findAll(@Param('projectId') projectId: string) {
-    return this.eventsService.findByProject(projectId);
+  async findAll(
+    @Param('projectId') projectId: string,
+    @Query() filter: HttpParamsDto,
+  ) {
+    return this.eventsService.findByProjectPaginated(projectId, filter);
   }
 }

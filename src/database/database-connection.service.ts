@@ -9,8 +9,9 @@ import { ConfigService } from '@nestjs/config';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import { drizzle } from 'drizzle-orm/node-postgres';
+import * as schema from './schema';
 
-export type DatabaseClient = NodePgDatabase;
+export type DatabaseClient = NodePgDatabase<typeof schema>;
 
 @Injectable()
 export class DatabaseConnection implements OnModuleDestroy, OnModuleInit {
@@ -27,7 +28,7 @@ export class DatabaseConnection implements OnModuleDestroy, OnModuleInit {
     this.logger.log('Connecting to Database');
     const connectionString = this.config.get<string>('database.uri');
     this.pool = new Pool({ connectionString });
-    this.client = drizzle(this.pool);
+    this.client = drizzle(this.pool, { schema });
     return this;
   }
 

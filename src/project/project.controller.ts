@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ProjectService } from './project.service';
 import { CreateProjectDto } from './dto/create-project.dto';
+import { HttpParamsDto } from '../libs/http-params.dto';
 
 @Controller('project')
 export class ProjectController {
@@ -12,12 +13,12 @@ export class ProjectController {
   }
 
   @Get(':id')
-  async findOne(id: string) {
+  async findOne(@Param('id') id: string) {
     return this.projectService.findOne(id);
   }
 
   @Get()
-  async findAll() {
-    return this.projectService.findAll();
+  async findAll(@Query() filter: HttpParamsDto) {
+    return this.projectService.findAllPaginated(filter);
   }
 }

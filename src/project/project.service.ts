@@ -5,6 +5,7 @@ import { eq } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { DatabaseClient } from '../database/database-connection.service';
+import { HttpParamsDto } from '../libs/http-params.dto';
 
 @Injectable()
 export class ProjectService {
@@ -20,17 +21,16 @@ export class ProjectService {
       .returning();
   }
 
-  async findAll() {
-    return this.db.select().from(projects);
+  async findAllPaginated(filter: HttpParamsDto) {
+    return this.db.query.projects.findMany({
+      limit: filter.limit,
+      offset: Math.max(filter.page - 1, 0),
+    });
   }
 
   async findOne(id: string) {
-    const result = await this.db
-      .select()
-      .from(projects)
-      .where(eq(projects.id, id))
-      .limit(1);
-
-    return result[0] ?? null;
+    return this.db.query.projects.findFirst({
+      where: eq(projects.id, id),
+    });
   }
 }
