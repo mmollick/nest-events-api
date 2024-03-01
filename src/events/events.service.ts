@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DB_CLIENT } from '../database/database.constant';
-import { events, NewEvent } from 'src/database/schema';
+import { events, NewEvent } from '../database/schema';
 import { eq } from 'drizzle-orm';
 import { DatabaseClient } from '../database/database-connection.service';
 import { HttpParamsDto } from '../libs/http-params.dto';
