@@ -21,6 +21,10 @@ class EnvironmentVariables {
   @IsOptional()
   @IsBoolean()
   DB_MIGRATE: boolean;
+
+  @IsOptional()
+  @IsString()
+  KAFKA_BROKER: string;
 }
 
 export function validate(config: Record<string, unknown>) {

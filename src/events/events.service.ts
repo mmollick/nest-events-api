@@ -4,13 +4,24 @@ import { events, NewEvent } from '../database/schema';
 import { eq } from 'drizzle-orm';
 import { DatabaseClient } from '../database/database-connection.service';
 import { HttpParamsDto } from '../libs/http-params.dto';
+import { ProducerService } from '../kafka/producer.service';
 
 @Injectable()
 export class EventsService {
-  constructor(@Inject(DB_CLIENT) private db: DatabaseClient) {}
+  constructor(
+    @Inject(DB_CLIENT) private db: DatabaseClient,
+    @Inject(ProducerService) private producer: ProducerService,
+  ) {}
 
   async create(newEvent: NewEvent) {
-    return this.db.insert(events).values(newEvent).returning();
+    return this.producer.produce({
+      topic: 'events',
+      messages: [
+        {
+          value: JSON.stringify(newEvent),
+        },
+      ],
+    });
   }
 
   async findByProjectPaginated(id: string, filter: HttpParamsDto) {

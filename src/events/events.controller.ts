@@ -20,11 +20,12 @@ export class EventsController {
 
   @Post()
   @SkipAuth()
-  create(
+  async create(
     @Body() createEventDto: CreateEventDto,
     @Param('projectId') projectId: string,
   ) {
-    return this.eventsService.create({ projectId, ...createEventDto });
+    await this.eventsService.create({ projectId, ...createEventDto });
+    return { acknowledged: true };
   }
 
   @Get()
