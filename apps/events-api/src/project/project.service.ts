@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DB_CLIENT } from '../database/database.constant';
-import { projects } from '../database/schema';
+import { DB_CLIENT } from '@app/database/database.constant';
+import { projects } from '@app/database/schema';
 import { eq } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateProjectDto } from './dto/create-project.dto';
-import { DatabaseClient } from '../database/database-connection.service';
-import { HttpParamsDto } from '../libs/http-params.dto';
+import { DatabaseClient } from '@app/database/database-connection.service';
+import { PaginationDto } from '@app/database/filters.dto';
 
 @Injectable()
 export class ProjectService {
@@ -21,7 +21,7 @@ export class ProjectService {
       .returning();
   }
 
-  async findAllPaginated(filter: HttpParamsDto) {
+  async findAllPaginated(filter: PaginationDto) {
     return this.db.query.projects.findMany({
       limit: filter.limit,
       offset: Math.max(filter.page - 1, 0),

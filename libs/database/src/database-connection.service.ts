@@ -21,7 +21,7 @@ export class DatabaseConnection implements OnModuleDestroy, OnModuleInit {
   public readonly client: DatabaseClient;
 
   /**
-   * Inits a new database using the configuration options
+   * Inits a new database using the config options
    * @param config
    */
   constructor(private config: ConfigService) {
@@ -33,7 +33,7 @@ export class DatabaseConnection implements OnModuleDestroy, OnModuleInit {
   }
 
   /**
-   * When initializing module, run migrations unless configuration disables it
+   * When initializing module, run migrations unless config disables it
    */
   async onModuleInit() {
     const runMigrations = this.config.get('database.runMigrations');

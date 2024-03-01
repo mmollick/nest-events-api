@@ -1,8 +1,59 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
+  "sourceRoot": "apps/events-api/src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/events-api/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/events-api",
+  "projects": {
+    "events-api": {
+      "type": "application",
+      "root": "apps/events-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/events-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/events-api/tsconfig.app.json"
+      }
+    },
+    "event-writer": {
+      "type": "application",
+      "root": "apps/event-writer",
+      "entryFile": "main",
+      "sourceRoot": "apps/event-writer/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/event-writer/tsconfig.app.json"
+      }
+    },
+    "config": {
+      "type": "library",
+      "root": "libs/config",
+      "entryFile": "index",
+      "sourceRoot": "libs/config/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/config/tsconfig.lib.json"
+      }
+    },
+    "database": {
+      "type": "library",
+      "root": "libs/database",
+      "entryFile": "index",
+      "sourceRoot": "libs/database/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/database/tsconfig.lib.json"
+      }
+    },
+    "usage-events": {
+      "type": "library",
+      "root": "libs/usage-events",
+      "entryFile": "index",
+      "sourceRoot": "libs/usage-events/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/usage-events/tsconfig.lib.json"
+      }
+    }
   }
 }

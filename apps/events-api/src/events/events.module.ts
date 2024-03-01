@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
-import { EventsService } from './events.service';
 import { EventsController } from './events.controller';
 import { ProjectService } from '../project/project.service';
-import { ProducerService } from '../kafka/producer.service';
+import {
+  UsageEventProducerService,
+  UsageEventService,
+} from '@app/usage-events';
 
 @Module({
   controllers: [EventsController],
-  providers: [EventsService, ProjectService, ProducerService],
+  providers: [ProjectService, UsageEventService, UsageEventProducerService],
 })
 export class EventsModule {}

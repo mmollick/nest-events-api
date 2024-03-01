@@ -1,7 +1,7 @@
 import { IsNumber, IsOptional } from 'class-validator';
 import { Transform } from 'class-transformer';
 
-export class HttpParamsDto {
+export class PaginationDto {
   @Transform(({ value }) => toNumber(value, 1, 1))
   @IsNumber()
   @IsOptional()

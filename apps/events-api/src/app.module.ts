@@ -1,20 +1,13 @@
 import { Module } from '@nestjs/common';
 import { EventsModule } from './events/events.module';
-import { ConfigModule } from './config/config.module';
-import { DatabaseModule } from './database/database.module';
+import { ConfigModule } from '@app/config';
+import { DatabaseModule } from '@app/database';
 import { ProjectModule } from './project/project.module';
 import { AuthGuard } from './guards/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
-import { KafkaModule } from './kafka/kafka.module';
 
 @Module({
-  imports: [
-    EventsModule,
-    ConfigModule,
-    DatabaseModule,
-    ProjectModule,
-    KafkaModule,
-  ],
+  imports: [EventsModule, ConfigModule, DatabaseModule, ProjectModule],
   controllers: [],
   providers: [
     {
