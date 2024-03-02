@@ -92,7 +92,8 @@
     "moduleNameMapper": {
       "^@app/configuration(|/.*)$": "<rootDir>/libs/configuration/src/$1",
       "^@app/database(|/.*)$": "<rootDir>/libs/database/src/$1",
-      "^@app/usage-events(|/.*)$": "<rootDir>/libs/usage-events/src/$1"
+      "^@app/usage-events(|/.*)$": "<rootDir>/libs/usage-events/src/$1",
+      "^@app/kafka(|/.*)$": "<rootDir>/libs/kafka/src/$1"
     }
   }
 }

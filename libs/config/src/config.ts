@@ -8,6 +8,9 @@ export default () => ({
     runMigrations: process.env.DB_MIGRATE !== 'false',
   },
   kafka: {
-    broker: process.env.KAFKA_BROKER ?? 'localhost:9093',
+    brokers: process.env.KAFKA_BROKER
+      ? process.env.KAFKA_BROKER.split(',')
+      : ['localhost:9093'],
+    groupId: process.env.KAFKA_GROUP_ID ?? 'default-group',
   },
 });

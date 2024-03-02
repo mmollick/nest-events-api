@@ -1,29 +1,25 @@
 import { NestFactory } from '@nestjs/core';
 import { EventWriterModule } from './event-writer.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    EventWriterModule,
-    {
-      transport: Transport.KAFKA,
-      options: {
-        client: {
-          brokers: ['localhost:9093'],
-        },
-        consumer: {
-          groupId: 'my-kafka-consumer',
-          allowAutoTopicCreation: true,
-        },
+  const appConfig = await NestFactory.create(EventWriterModule);
+  const config = appConfig.get(ConfigService);
+
+  const app = appConfig.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.KAFKA,
+    options: {
+      client: {
+        brokers: config.get('kafka.brokers'),
+      },
+      consumer: {
+        groupId: config.get('kafka.groupId'),
+        allowAutoTopicCreation: true,
       },
     },
-  );
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-    }),
-  );
+  });
+
   app.enableShutdownHooks();
   await app.listen();
 }

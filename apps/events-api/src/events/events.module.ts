@@ -5,17 +5,29 @@ import {
   UsageEventProducerService,
   UsageEventService,
 } from '@app/usage-events';
-import { CacheModule } from '@nestjs/cache-manager';
-import { RedisClientOptions } from 'redis';
-import * as redisStore from 'cache-manager-redis-store';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    CacheModule.register<RedisClientOptions>({
-      store: redisStore,
-
-      url: 'redis://localhost:6379',
-    }),
+    ClientsModule.registerAsync([
+      {
+        useFactory: (config) => ({
+          transport: Transport.KAFKA,
+          options: {
+            client: {
+              brokers: config.get('kafka.brokers'),
+            },
+            consumer: {
+              groupId: config.get('kafka.groupId'),
+              allowAutoTopicCreation: true,
+            },
+          },
+        }),
+        name: 'KAFKA_SERVICE',
+        inject: [ConfigService],
+      },
+    ]),
   ],
   controllers: [EventsController],
   providers: [ProjectService, UsageEventService, UsageEventProducerService],

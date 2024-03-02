@@ -24,7 +24,11 @@ class EnvironmentVariables {
 
   @IsOptional()
   @IsString()
-  KAFKA_BROKER: string;
+  KAFKA_BROKERS: string;
+
+  @IsOptional()
+  @IsString()
+  KAFKA_GROUP_ID: string;
 }
 
 export function validate(config: Record<string, unknown>) {
