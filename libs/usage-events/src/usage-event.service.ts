@@ -14,7 +14,6 @@ export class UsageEventService {
   }
 
   async findByProjectPaginated(id: string, filter: PaginationDto) {
-    console.log('db query');
     return this.db.query.events.findMany({
       where: eq(events.projectId, id),
       limit: filter.limit,
